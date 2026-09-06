@@ -5,7 +5,7 @@ An original, from-scratch implementation of the MUSIC (MUltiple SIgnal
 Classification) algorithm (Schmidt, 1986), the subspace-based DOA method
 that is the modern successor to the classical beamforming and array
 processing theory covered in Van Trees' "Optimum Array Processing" and
-in the array-signal-processing coursework this report's Section 5
+in the array-signal-processing literature this report's Section 5
 summarizes. No code from that textbook or its companion demo package is
 used; this is a clean re-implementation of the algorithm for a
 simulated scenario.

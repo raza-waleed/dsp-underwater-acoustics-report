@@ -3,11 +3,11 @@ Matched-filter detection of a known pulse in noise.
 
 This is an original, from-scratch illustration of the classical
 Neyman-Pearson matched-filter detector (Kay, 1998), the same detection
-framework summarized in Section 4 of the report from two underwater
-acoustics detection papers studied during coursework. No code or data
-from those papers is used; this is a clean re-implementation of the
-underlying theory for a simple synthetic scenario, built to show the
-concept, not to reproduce either paper's results.
+framework summarized in Section 4 of the report from two cited underwater
+acoustics detection papers. No code or data from those papers is used;
+this is a clean re-implementation of the underlying theory for a simple
+synthetic scenario, built to show the concept, not to reproduce either
+paper's results.
 
 Scenario: a known pulse (a Gaussian-windowed tone, a simple stand-in for
 an acoustic transient) arrives at an unknown time within a longer noisy

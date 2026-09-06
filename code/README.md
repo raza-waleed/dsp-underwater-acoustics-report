@@ -28,14 +28,14 @@ are written to `../../figures/`.
 
 ## What is cited but not included
 
-The report's coursework background draws on the following, all cited by
+The report's background material draws on the following, all cited by
 title/author in the report's References section and **not present anywhere
 in this repository**:
 
 - H. L. Van Trees, *Optimum Array Processing* (textbook, ~139 MB scan;
   copyrighted, not redistributed)
-- R. J. Urick, *Principles of Underwater Sound* (textbook; course slides
-  built around it, not redistributed)
+- R. J. Urick, *Principles of Underwater Sound* (textbook; reference
+  material built around it, not redistributed)
 - Two underwater acoustic signal detection papers (EM-Viterbi clustering
   method; Taylor, Arrowsmith & Anderson's matched-filter/p-value detector,
   JASA 2013)
@@ -45,7 +45,7 @@ in this repository**:
   theory textbook (1998) - cited for the theory behind the two demo scripts
   above, not reproduced
 - Texas Instruments TMS320C54x/C55x DSP technical documentation
-- Harbin Engineering University course lecture slides (array signal
+- Harbin Engineering University lecture materials (array signal
   processing, digital signal processing, principles of underwater sound)
 - Found/third-party MATLAB code (MUSIC/DOA scripts, a DOA GUI, and a
   textbook companion demo package) that was reviewed during research for
