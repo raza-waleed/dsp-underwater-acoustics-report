@@ -1,6 +1,6 @@
 # Digital Signal Processing for Underwater Acoustic Channels
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22478268.svg)](https://doi.org/10.5281/zenodo.22478268)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22547577.svg)](https://doi.org/10.5281/zenodo.22547577)
 
 A report connecting the theoretical foundations of underwater
 acoustic DSP (processor architecture, channel properties, detection theory,
@@ -19,10 +19,11 @@ The two demo scripts are also mirrored on [Hugging Face](https://huggingface.co/
 This report does not present new field measurements. Instead, it presents
 five background topics in the report's own words, cites every external
 source (textbooks, papers, reference material) by title and author without
-reproducing any of it, and builds two original computational demonstrations
-from scratch (a matched-filter detector and a MUSIC direction-of-arrival
-estimator) to show working understanding of the two most algorithmically
-involved topics. It then draws explicit, verifiable connections to real
+reproducing any of it, and builds three original computational
+demonstrations from scratch (a matched-filter detector, a MUSIC
+direction-of-arrival estimator, and a PAPR/CCDF computation on this
+portfolio's own OFDM structure) to show working understanding of the
+underlying methods. It then draws explicit, verifiable connections to real
 results already published elsewhere in this portfolio:
 
 - Matched filtering (the subject of the detection-theory literature cited
@@ -34,6 +35,10 @@ results already published elsewhere in this portfolio:
 - Shallow-water channel properties described here (frequency-
   dependent attenuation, short coherence time) were independently measured
   in the lake trial's real data.
+- The real 3.0 kHz acoustic bandwidth measured for a resonant transducer in
+  the tank report is used to argue why OFDM's peak-to-average power ratio
+  (measured here at 11 to 14 dB) is more consequential for a narrowband
+  underwater transducer than for a broadband RF amplifier.
 
 See [`code/README.md`](code/README.md) for details on the two original demo
 scripts and a full list of what is cited but intentionally not included in
@@ -43,6 +48,7 @@ this repository.
 
 - [Underwater Acoustic Transducer & Hydrophone Systems](https://github.com/raza-waleed/acoustic-measurement-report) - tank characterization report
 - [Underwater Acoustic OFDM/QPSK Communication](https://github.com/raza-waleed/underwater-acoustic-ofdm-lake-trial) - lake trial report
+- [Ray-Tracing Simulation of Underwater Acoustic Channels](https://github.com/raza-waleed/bellhop-acoustic-modeling-report) - BELLHOP ray-tracing report
 
 ## Contents
 
@@ -59,11 +65,11 @@ To cite this specific archived release, cite the Zenodo record:
 ```bibtex
 @software{raza2026dspunderwater,
   author    = {Raza, Waleed},
-  title     = {raza-waleed/dsp-underwater-acoustics-report: v1.0.0 - DSP for Underwater Acoustic Channels},
+  title     = {raza-waleed/dsp-underwater-acoustics-report: v1.1.0 - Adds PAPR/CCDF section},
   year      = {2026},
   publisher = {Zenodo},
-  version   = {v1.0.0},
-  doi       = {10.5281/zenodo.22478268},
-  url       = {https://doi.org/10.5281/zenodo.22478268}
+  version   = {v1.1.0},
+  doi       = {10.5281/zenodo.22547577},
+  url       = {https://doi.org/10.5281/zenodo.22547577}
 }
 ```
