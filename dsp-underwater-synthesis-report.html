@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Signal Processing for Underwater Acoustic Channels</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --panel: #ffffff;
+    --text: #1a1a1a;
+    --muted: #5b5b5b;
+    --line: #dcdcd6;
+    --accent: #1f5f8b;
+    --accent2: #b45309;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 40px 24px 80px; }
+  header.page-head {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  header.page-head .kicker { color: var(--accent2); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  header.page-head h1 { font-size: 1.9rem; margin: 0 0 8px; line-height: 1.25; }
+  header.page-head .meta { color: var(--muted); font-size: 0.92rem; }
+  .abstract {
+    background: #eef4f8;
+    border: 1px solid #cfe0ea;
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+  }
+  .abstract b { color: var(--accent); }
+  .abstract-note { margin-top: 14px; padding-top: 12px; border-top: 1px dashed #cfe0ea; font-size: 0.82rem; font-style: italic; color: var(--muted); }
+  section.block {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 26px 30px;
+    margin-bottom: 28px;
+  }
+  section.block h2 { font-size: 1.25rem; margin: 0 0 4px; color: var(--accent); }
+  section.block .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 18px; }
+  h3.subhead { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin: 22px 0 10px; }
+  .params { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .params span {
+    background: #eef4f8; border: 1px solid #cfe0ea; border-radius: 4px;
+    padding: 4px 10px; font-size: 0.85rem; font-family: ui-monospace, Consolas, monospace;
+  }
+  .result-callout { background: #eef7ee; border-left: 4px solid #3c8c40; padding: 10px 16px; margin: 14px 0; font-size: 0.95rem; }
+  .result-callout b { color: #2c6b2f; }
+  .model-callout { background: #fdf3ea; border-left: 4px solid var(--accent2); padding: 10px 16px; margin: 14px 0; font-size: 0.95rem; }
+  .model-callout b { color: var(--accent2); }
+  .cite-callout { background: #f2f0fb; border-left: 4px solid #6d4fc2; padding: 10px 16px; margin: 14px 0; font-size: 0.9rem; color: var(--muted); }
+  .cite-callout b { color: #6d4fc2; }
+  .figure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 16px 0 4px; }
+  .figure-grid.single { grid-template-columns: 1fr; }
+  figure { margin: 0; }
+  figure img, figure svg { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 4px; background: #fff; display: block; }
+  figcaption { font-size: 0.8rem; color: var(--muted); margin-top: 4px; text-align: center; }
+  .diagram-wrap { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 12px; margin: 14px 0; }
+  .fig-label { font-size: 0.8rem; color: var(--muted); margin: 8px 0 4px; text-align: center; }
+  footer.page-foot { color: var(--muted); font-size: 0.85rem; margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; }
+  nav.toc { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 20px 24px; margin-bottom: 24px; }
+  .toc-heading { font-size: 0.8rem; font-weight: 700; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .toc-list, .toc-sublist, .toc-endmatter { list-style: none; margin: 0; padding: 0; }
+  .toc-list > li { margin-bottom: 2px; }
+  .toc-list a, .toc-sublist a, .toc-endmatter a {
+    display: flex; align-items: baseline; gap: 10px; padding: 5px 8px; border-radius: 4px; color: var(--text); text-decoration: none;
+  }
+  .toc-list a:hover, .toc-sublist a:hover, .toc-endmatter a:hover { background: #eef4f8; color: var(--accent); }
+  .toc-num { flex: 0 0 28px; color: var(--accent); font-weight: 700; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+  .toc-title { font-size: 0.95rem; }
+  .toc-endmatter { margin-top: 10px; padding-top: 12px; border-top: 1px dashed var(--line); display: flex; gap: 6px 22px; flex-wrap: wrap; }
+  .toc-endmatter a { padding: 3px 4px; font-size: 0.85rem; color: var(--muted); font-style: italic; }
+  .toc-endmatter a:hover { color: var(--accent); background: none; }
+  details.lof { margin-bottom: 32px; }
+  details.lof summary { cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+  .lof-list { font-size: 0.83rem; color: var(--muted); columns: 2; margin: 10px 0 0; padding-left: 18px; }
+  .lof-list li { margin-bottom: 4px; break-inside: avoid; }
+  .lof-list a { color: var(--accent); text-decoration: none; }
+  .lof-list a:hover { text-decoration: underline; }
+  .nomenclature { font-size: 0.85rem; columns: 2; column-gap: 24px; margin: 10px 0; }
+  .nomenclature div { break-inside: avoid; margin-bottom: 5px; }
+  .nomenclature b { font-family: ui-monospace, Consolas, monospace; color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page-head">
+  <div class="kicker">Underwater Acoustics Technical Report</div>
+  <h1>Digital Signal Processing for Underwater Acoustic Channels: Coursework Foundations and Applied Lessons</h1>
+  <div class="meta">Waleed Raza · Underwater Acoustic Engineering</div>
+</header>
+
+<div class="abstract">
+  <b>Abstract.</b> This report synthesizes five areas of digital signal processing (DSP) coursework relevant to
+  underwater acoustic communication, DSP processor architecture, shallow-water channel properties, low-SNR
+  signal detection, array processing and direction-of-arrival (DOA) estimation, and orthogonal frequency-division
+  multiplexing (OFDM), and connects each to concrete, verified findings from two earlier reports in this
+  portfolio: a tank characterization of a piezoelectric transducer and hydrophone system, and a lake trial of a
+  multi-band OFDM/QPSK communication link. No textbook, paper, or course-slide content is reproduced here;
+  every external source is cited by title and author, and two original computational demonstrations, a
+  matched-filter detector and a MUSIC direction-of-arrival estimator, are built from first principles to
+  illustrate the underlying theory. The report's throughline is direct: the detection-theory literature studied
+  during coursework used matched filtering as its core primitive, and that exact technique later achieved
+  correlation scores above 0.99 detecting a real synchronization pulse in the lake trial; the OFDM concepts
+  studied were later validated against a real underwater OFDM signal, reconstructed to 0.001% error vector
+  magnitude; and the shallow-water channel properties studied in the literature (frequency-dependent absorption,
+  short coherence times) were independently measured in the lake trial's real data. The result is a single
+  narrative connecting what was studied to what was subsequently built and measured.
+  <div class="abstract-note">This report contains 4 figures, numbered in sequence and cited by number in the
+  text where they are discussed. Every external source (textbooks, papers, course material) is listed in the
+  References section and is not included in this repository.</div>
+</div>
+
+<nav class="toc" aria-label="Table of contents">
+  <div class="toc-heading">Contents</div>
+  <ol class="toc-list">
+    <li><a href="#sec1"><span class="toc-num">1</span><span class="toc-title">Introduction</span></a></li>
+    <li><a href="#sec2"><span class="toc-num">2</span><span class="toc-title">DSP Processor Architecture Foundations</span></a></li>
+    <li><a href="#sec3"><span class="toc-num">3</span><span class="toc-title">Shallow-Water Channel Properties: Theory Meets Measurement</span></a></li>
+    <li><a href="#sec4"><span class="toc-num">4</span><span class="toc-title">Detection Theory for Low-SNR Underwater Signals</span></a></li>
+    <li><a href="#sec5"><span class="toc-num">5</span><span class="toc-title">Array Signal Processing and Direction-of-Arrival Estimation</span></a></li>
+    <li><a href="#sec6"><span class="toc-num">6</span><span class="toc-title">OFDM for Underwater Acoustic Communication</span></a></li>
+    <li><a href="#sec7"><span class="toc-num">7</span><span class="toc-title">Synthesis: Lessons Learned</span></a></li>
+  </ol>
+  <div class="toc-endmatter">
+    <a href="#nomenclature">Nomenclature</a>
+    <a href="#lof">List of Figures</a>
+    <a href="#references">References</a>
+  </div>
+</nav>
+
+<details class="lof" id="lof">
+  <summary>List of Figures (4)</summary>
+  <ol class="lof-list">
+    <li><a href="#fig1">Figure 1: Matched-filter detection of a known pulse in noise</a></li>
+    <li><a href="#fig2">Figure 2: Matched-filter detection score versus SNR</a></li>
+    <li><a href="#fig3">Figure 3: MUSIC versus conventional beamforming, simulated array</a></li>
+    <li><a href="#fig4">Figure 4: Coursework-to-application synthesis diagram</a></li>
+  </ol>
+</details>
+
+<section class="block" id="sec1">
+  <h2>1. Introduction</h2>
+  <div class="subtitle">Why this report exists, and what it is not</div>
+  <p>The two earlier reports in this portfolio, a tank characterization of a piezoelectric underwater transducer
+  and hydrophone system, and a channel and modulation study of a real multi-band OFDM/QPSK lake trial, both
+  presented original measurements and original computational analysis of real data. This report is different in
+  kind. It draws on coursework, taken during a master's program in underwater acoustic engineering, covering DSP
+  processor architecture, underwater acoustic channel properties, statistical detection theory, array signal
+  processing, and OFDM communication. That coursework included published research papers, a graduate-level array
+  processing textbook, and university lecture slides, none of which are original work and none of which are
+  reproduced in this report or included in its repository.</p>
+  <p>What this report does instead is synthesize: it summarizes, in its own words and at a level appropriate for
+  proper citation, the core idea from each area of coursework, and then shows, concretely, where that idea
+  reappeared in the two earlier reports' real results. Two small computational demonstrations, a matched-filter
+  detector and a MUSIC direction-of-arrival estimator, are built from scratch to demonstrate working
+  understanding of the two most algorithmically involved topics. Both are clearly labeled as original
+  illustrative code, not reproductions of any cited source.</p>
+</section>
+
+<section class="block" id="sec2">
+  <h2>2. DSP Processor Architecture Foundations</h2>
+  <div class="subtitle">Why specialized hardware matters before any algorithm can run in real time</div>
+  <p>Underwater acoustic processing, matched filtering, beamforming, OFDM demodulation, is computationally
+  intensive and, in a deployed system, must run in real time on embedded hardware. Coursework on the Texas
+  Instruments TMS320C54x and TMS320C55x fixed-point DSP families [8] compared their architectures directly: the
+  C54x uses a single multiply-accumulate (MAC) unit and a 16-bit fixed instruction width, while the C55x adds a
+  second MAC unit, four accumulators instead of two, and a variable-length instruction set (8 to 48 bits) that
+  improves code density. The practical consequence is throughput: the C55x reaches roughly 140 to 800 million
+  instructions per second against 30 to 160 for the C54x, at roughly one-sixth the power per instruction.</p>
+  <div class="params">
+    <span>C54x: 1 MAC unit</span><span>C55x: 2 MAC units</span><span>C55x: 4x 40-bit accumulators</span>
+    <span>C55x: ~5x throughput</span><span>C55x: ~6x lower power/MIPS</span>
+  </div>
+  <p>Every algorithm discussed in this report, matched filtering (Section 4), MUSIC (Section 5), and OFDM
+  demodulation (Section 6), reduces at its core to the same operation this comparison is about: multiply-and-
+  accumulate, applied either as a correlation, a covariance estimate, or an FFT butterfly. The processor
+  architecture used in a real deployed system determines whether these operations run fast enough, and at low
+  enough power, for an autonomous underwater platform. This is why DSP architecture is coursework foundational
+  to the rest of this report rather than a separate topic.</p>
+</section>
+
+<section class="block" id="sec3">
+  <h2>3. Shallow-Water Channel Properties: Theory Meets Measurement</h2>
+  <div class="subtitle">What the literature predicts, and what the lake trial actually measured</div>
+  <p>Coursework on underwater acoustic communication channels covered the properties that make shallow-water
+  acoustic links difficult: surface-wave-driven channel variation, medium inhomogeneities, and the resulting
+  amplitude and phase fluctuation within and between transmitted packets, along with the associated challenge of
+  channel estimation under these conditions. Two properties from that literature are directly testable against
+  this portfolio's own measured data.</p>
+  <p><b>Frequency-dependent attenuation.</b> Underwater acoustic absorption increases with frequency, so a
+  wideband channel should show falling signal-to-noise ratio (SNR) at higher frequencies over a fixed range. The
+  lake trial report measured this directly, not modeled it: real signal-to-noise ratio measured from the field
+  recording fell from 7.9 dB at 3-6 kHz to 3.3 dB at 12-15 kHz, monotonically across all four measured bands.</p>
+  <p><b>Short channel coherence time.</b> The literature on intra-packet channel variation describes shallow-water
+  channels whose impulse response can change meaningfully within a single transmitted packet. The lake trial
+  report measured this too: a channel estimate computed from one real received OFDM symbol was smooth and
+  physically consistent with genuine multipath propagation, but did not remain valid for the very next symbol,
+  170.7 ms later, evidence that this channel's coherence time is shorter than the trial's own symbol spacing.</p>
+  <div class="result-callout">
+    <b>From the lake trial report:</b> SNR = 7.9 dB (3-6 kHz) falling to 3.3 dB (12-15 kHz) &nbsp;·&nbsp;
+    channel estimate invalid one symbol period (170.7 ms) later
+  </div>
+  <p>Both measurements are real, independent results from that report, not new analysis performed here; they are
+  presented in this section because they are the empirical counterpart to the theoretical channel properties
+  studied in coursework, and seeing both together is the point of this report.</p>
+</section>
+
+<section class="block" id="sec4">
+  <h2>4. Detection Theory for Low-SNR Underwater Signals</h2>
+  <div class="subtitle">From the coursework papers, to an original demonstration, to a real application</div>
+  <p>Two research papers studied during a detection-theory course addressed the same underlying problem from
+  different angles. One proposed detecting and estimating the time-of-arrival of underwater acoustic signals of
+  unknown structure by labeling samples as signal or noise using a constrained expectation-maximization (EM)
+  algorithm combined with the Viterbi algorithm for hidden Markov model clustering, avoiding the need for a
+  fixed detection threshold; it was validated against a real sea experiment. The other, by Taylor, Arrowsmith,
+  and Anderson [4], developed a matched-filter detector combined with a p-value formulation for detecting small
+  explosions at local distances, built on the classical Neyman-Pearson hypothesis-testing framework.</p>
+  <div class="cite-callout">
+    <b>Cited, not reproduced:</b> neither paper's code, figures, or text appear in this report. Their methods
+    are summarized here at a conceptual level; see References [3] and [4] for the original work.
+  </div>
+  <p>The common foundation beneath both papers is the matched filter: correlating a received signal against a
+  known reference waveform is the provably optimal linear detector for a known signal in white Gaussian noise
+  [7]. Figure 1 demonstrates this from scratch, an original implementation, not derived from either cited paper,
+  on a synthetic scenario: a short pulse is buried in a noise record at 3 dB SNR, invisible to the eye, yet the
+  matched-filter output produces a sharp, unambiguous peak at the true arrival time. Figure 2 sweeps the input
+  SNR and shows the detection score degrading gracefully rather than catastrophically as SNR falls, the
+  qualitative behavior both cited papers report from their own more sophisticated detectors.</p>
+  <div class="figure-grid single">
+    <figure id="fig1"><img src="figures/matched_filter_pulse.png" alt="Matched filter pulse detection example"><figcaption>Figure 1: A known pulse, invisible in a 3 dB-SNR noisy record, located exactly by matched filtering. Original synthetic demonstration.</figcaption></figure>
+  </div>
+  <div class="figure-grid single">
+    <figure id="fig2"><img src="figures/matched_filter_snr_sweep.png" alt="Matched filter SNR sweep"><figcaption>Figure 2: Matched-filter detection score versus input SNR, averaged over 30 trials per point. Original synthetic demonstration.</figcaption></figure>
+  </div>
+  <p>This is not only a theoretical exercise. The identical technique, correlating a short known reference
+  waveform against a much longer real recording, was used for real in the lake trial report to identify a
+  synchronization pulse experiment: a matched filter built from one extracted pulse achieved 1,233 detections
+  across a 1006-second recording, many with correlation scores above 0.99. The coursework studied the theory;
+  the lake trial applied it to real data and it worked exactly as the theory predicts.</p>
+</section>
+
+<section class="block" id="sec5">
+  <h2>5. Array Signal Processing and Direction-of-Arrival Estimation</h2>
+  <div class="subtitle">From a graduate textbook and course slides, to an original simulation</div>
+  <p>Array signal processing coursework, built around Van Trees' graduate textbook <i>Optimum Array Processing</i>
+  [1] and semester-long lecture slides on the same subject, covered the theory of sensor arrays: how a set of
+  spatially distributed sensors can be combined to estimate the direction of arrival of an incoming signal, from
+  classical delay-and-sum beamforming through modern subspace-based methods. Neither the textbook nor the
+  course slides are reproduced here.</p>
+  <div class="cite-callout">
+    <b>Cited, not reproduced:</b> Van Trees [1] is a 139 MB, 14-chapter graduate textbook; only its title and
+    the specific algorithm it covers are referenced here. No page, figure, or code from it is included.
+  </div>
+  <p>Figure 3 is an original, from-scratch implementation of the MUSIC (MUltiple SIgnal Classification) algorithm
+  [6], the subspace-based direction-of-arrival method that is the modern successor to the classical beamforming
+  theory in [1]. The scenario is a simulated 8-element uniform linear array receiving two plane waves from
+  angles 8 degrees apart, at 10 dB SNR. This is a simulation: no multi-element hydrophone array recording exists
+  anywhere in this project's portfolio, so the point is to demonstrate the algorithm's correctness, not to
+  characterize a real array.</p>
+  <div class="figure-grid single">
+    <figure id="fig3"><img src="figures/music_doa_pseudospectrum.png" alt="MUSIC vs conventional beamforming"><figcaption>Figure 3: MUSIC resolves two sources 8 degrees apart that a conventional beamformer at the same 8-element aperture barely separates. Original simulation, not real array data.</figcaption></figure>
+  </div>
+  <p>The result reproduces the textbook's central claim about subspace methods: MUSIC's pseudospectrum shows two
+  sharp, well-separated peaks exactly at the true angles, with more than 30 dB of null depth between them, while
+  the conventional beamformer at the same array aperture shows only a shallow, barely-resolved dip. This is the
+  resolution advantage that motivates using subspace methods in sonar and hydrophone array systems where
+  physical aperture is constrained.</p>
+</section>
+
+<section class="block" id="sec6">
+  <h2>6. OFDM for Underwater Acoustic Communication</h2>
+  <div class="subtitle">From a coursework presentation topic to a real, validated reconstruction</div>
+  <p>OFDM (orthogonal frequency-division multiplexing) was the subject of a coursework presentation: splitting a
+  wideband channel into narrowband orthogonal subcarriers, modulating each independently, and recovering them at
+  the receiver via the fast Fourier transform, the same technique that underlies essentially all modern wireless
+  and underwater acoustic digital communication standards.</p>
+  <p>This is the one topic in this report where coursework and applied result are not just conceptually linked
+  but numerically identical. The lake trial report determined, from first principles and with no surviving
+  transmission documentation, the exact OFDM parameters of a real 2018 underwater communication trial: a
+  real-valued 8192-point FFT operating directly at 48 kHz, with 512 active QPSK subcarriers per 3 kHz sub-band.
+  That model reproduced the known pilot data of every transmitted reference burst to within 0.001% error vector
+  magnitude, and was then used to measure the real channel properties summarized in Section 3.</p>
+  <div class="result-callout">
+    <b>From the lake trial report:</b> NFFT = 8192 &nbsp;·&nbsp; 512 active QPSK subcarriers per 3 kHz sub-band
+    &nbsp;·&nbsp; EVM = 0.001% across all 6 transmitted reference bursts
+  </div>
+  <p>The presentation covered why OFDM is attractive (spectral efficiency, robustness to narrowband interference
+  and multipath, straightforward equalization) at a conceptual level appropriate for an introductory treatment.
+  The lake trial report is the concrete demonstration of exactly those properties, and of the practical
+  difficulty Section 3 already described: a channel whose coherence time is shorter than the OFDM symbol period
+  it was built to serve.</p>
+</section>
+
+<section class="block" id="sec7">
+  <h2>7. Synthesis: Lessons Learned</h2>
+  <div class="subtitle">How five areas of coursework became two applied reports</div>
+  <p>Figure 4 summarizes the structure of this report: each coursework area studied maps to a specific result
+  already produced elsewhere in this portfolio, or to an original demonstration built here to show the
+  underlying method is genuinely understood rather than only cited.</p>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 920 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Coursework to application synthesis diagram">
+      <style>
+        .box { fill:#eef4f8; stroke:#1f5f8b; stroke-width:1.5; rx:6; }
+        .box2 { fill:#fdf3ea; stroke:#b45309; stroke-width:1.5; rx:6; }
+        .lbl { font: 600 12px system-ui, sans-serif; fill:#1a1a1a; text-anchor:middle; }
+        .sub { font: 10px system-ui, sans-serif; fill:#5b5b5b; text-anchor:middle; }
+        .arrow-line { stroke:#8695a8; stroke-width:1.5; fill:none; marker-end:url(#arrow2); }
+        .col-head { font: 700 11px system-ui, sans-serif; fill:#8695a8; text-anchor:middle; letter-spacing:0.04em; }
+      </style>
+      <defs>
+        <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L7,3 L0,6 Z" fill="#8695a8"/>
+        </marker>
+      </defs>
+      <text x="150" y="20" class="col-head">COURSEWORK (CITED)</text>
+      <text x="770" y="20" class="col-head">THIS PORTFOLIO (APPLIED)</text>
+
+      <rect x="10" y="35" width="280" height="45" class="box"/>
+      <text x="150" y="55" class="lbl">Detection theory papers [3][4]</text>
+      <text x="150" y="70" class="sub">EM-Viterbi ToA, matched filter + p-value</text>
+      <path d="M290,57 L620,57" class="arrow-line"/>
+      <rect x="620" y="35" width="290" height="45" class="box2"/>
+      <text x="765" y="55" class="lbl">Lake trial: sync-pulse detection</text>
+      <text x="765" y="70" class="sub">matched filter, 1233 hits, score &gt; 0.99</text>
+
+      <rect x="10" y="95" width="280" height="45" class="box"/>
+      <text x="150" y="115" class="lbl">Array processing [1], course slides</text>
+      <text x="150" y="130" class="sub">Van Trees, beamforming, MUSIC theory</text>
+      <path d="M290,117 L620,117" class="arrow-line"/>
+      <rect x="620" y="95" width="290" height="45" class="box2"/>
+      <text x="765" y="115" class="lbl">Figure 3: original MUSIC demo</text>
+      <text x="765" y="130" class="sub">simulated 8-element array, resolves 8 deg</text>
+
+      <rect x="10" y="155" width="280" height="45" class="box"/>
+      <text x="150" y="175" class="lbl">OFDM presentation</text>
+      <text x="150" y="190" class="sub">subcarriers, IFFT/FFT, multipath robustness</text>
+      <path d="M290,177 L620,177" class="arrow-line"/>
+      <rect x="620" y="155" width="290" height="45" class="box2"/>
+      <text x="765" y="175" class="lbl">Lake trial: OFDM scheme reconstruction</text>
+      <text x="765" y="190" class="sub">8192-pt FFT, EVM = 0.001%</text>
+
+      <rect x="10" y="215" width="280" height="45" class="box"/>
+      <text x="150" y="235" class="lbl">UWA channel literature</text>
+      <text x="150" y="250" class="sub">absorption, coherence time, fading</text>
+      <path d="M290,237 L620,237" class="arrow-line"/>
+      <rect x="620" y="215" width="290" height="45" class="box2"/>
+      <text x="765" y="235" class="lbl">Lake trial: measured SNR &amp; coherence time</text>
+      <text x="765" y="250" class="sub">7.9 to 3.3 dB &nbsp;·&nbsp; coherence &lt; 170.7 ms</text>
+
+      <rect x="10" y="275" width="280" height="45" class="box"/>
+      <text x="150" y="295" class="lbl">DSP architecture [8]</text>
+      <text x="150" y="310" class="sub">TMS320C54x/C55x, MAC throughput</text>
+      <path d="M290,297 L620,297" class="arrow-line"/>
+      <rect x="620" y="275" width="290" height="45" class="box2"/>
+      <text x="765" y="295" class="lbl">Real-time feasibility of every method above</text>
+      <text x="765" y="310" class="sub">correlation, covariance, FFT = MAC operations</text>
+
+      <text x="460" y="360" class="sub" font-size="11">Every left-to-right pair above is a real,</text>
+      <text x="460" y="376" class="sub" font-size="11">independently verifiable connection, not a rhetorical one.</text>
+    </svg>
+  </div>
+  <div class="fig-label" id="fig4">Figure 4: Synthesis diagram connecting cited coursework (left) to verified applied results and original demonstrations in this portfolio (right).</div>
+  <p>The lesson that generalizes across all five rows is the same one detection theory itself teaches: a
+  technique's value is established not by how sophisticated it sounds, but by whether it performs against real
+  data. Matched filtering is a simple, decades-old idea; it detected a real synchronization pulse at correlation
+  scores above 0.99. An 8192-point FFT with 512 active subcarriers is a specific, checkable claim; it reproduced
+  real pilot data to 0.001% error. MUSIC's resolution advantage over conventional beamforming is a textbook
+  claim; the simulation in Figure 3 reproduces it directly. In each case, the coursework provided the concept,
+  and this portfolio's other reports, or the original demonstrations built here, provided the verification.</p>
+</section>
+
+<section class="block" id="nomenclature">
+  <h2 style="font-size:1.05rem;">Nomenclature</h2>
+  <div class="nomenclature">
+    <div><b>DOA</b> &nbsp;direction of arrival</div>
+    <div><b>EM</b> &nbsp;expectation-maximization</div>
+    <div><b>EVM</b> &nbsp;error vector magnitude</div>
+    <div><b>MAC</b> &nbsp;multiply-accumulate (DSP operation)</div>
+    <div><b>MUSIC</b> &nbsp;MUltiple SIgnal Classification</div>
+    <div><b>NFFT</b> &nbsp;FFT size used for OFDM (de)modulation</div>
+    <div><b>OFDM</b> &nbsp;orthogonal frequency-division multiplexing</div>
+    <div><b>QPSK</b> &nbsp;quadrature phase-shift keying</div>
+    <div><b>SNR</b> &nbsp;signal-to-noise ratio</div>
+    <div><b>ToA</b> &nbsp;time of arrival</div>
+    <div><b>ULA</b> &nbsp;uniform linear array</div>
+  </div>
+</section>
+
+<footer class="page-foot" id="references">
+  <p><b>Data and materials availability.</b> This report cites textbooks, published papers, and university
+  course materials studied during coursework. None of these are included in this repository, per their
+  copyright and course-material status. Only two original, from-scratch computational demonstrations (Figures
+  1-3) and one original diagram (Figure 4) are included as code and figures.</p>
+  <p><b>References</b></p>
+  <p style="font-size:0.85rem;">
+  [1] H. L. Van Trees, <i>Optimum Array Processing</i>, Wiley-Interscience, 2002. (Cited for the theory in
+  Section 5; not reproduced.)<br>
+  [2] R. J. Urick, <i>Principles of Underwater Sound</i>, 3rd ed., McGraw-Hill, 1983. (Course material basis for
+  Section 3 background; not reproduced.)<br>
+  [3] "Detection and Time-of-Arrival Estimation of Underwater Acoustic Signals" (EM/Viterbi clustering method,
+  validated against a sea experiment; course reading material for Section 4; title cited, not reproduced.)<br>
+  [4] S. R. Taylor, S. J. Arrowsmith, and D. N. Anderson, "Development of a matched filter detector for acoustic
+  signals at local distances from small explosions," <i>J. Acoust. Soc. Am.</i>, vol. 134, pp. EL84-EL90, 2013.
+  DOI: 10.1121/1.4809779.<br>
+  [5] M. Murad, A. A. Sheikh, M. A. Manzoor, E. Felemban, and S. Qaisar, "A Survey on Current Underwater
+  Acoustic Sensor Network Applications," <i>Int. J. Computer Theory and Engineering</i>, vol. 7, no. 1, pp.
+  51-56, Feb. 2015. DOI: 10.7763/IJCTE.2015.V7.929.<br>
+  [6] R. O. Schmidt, "Multiple emitter location and signal parameter estimation," <i>IEEE Trans. Antennas
+  Propag.</i>, vol. 34, no. 3, pp. 276-280, 1986. (MUSIC algorithm cited for Figure 3's original implementation.)<br>
+  [7] S. M. Kay, <i>Fundamentals of Statistical Signal Processing: Detection Theory</i>, Prentice Hall, 1998.
+  (Matched-filter theory cited for Figures 1-2's original implementation.)<br>
+  [8] Texas Instruments, TMS320C54x/TMS320C55x DSP technical reference documentation. (Course assignment
+  material for Section 2; not reproduced.)<br>
+  [9] Array Signal Processing, Digital Signal Processing, and Principles of Underwater Sound course lecture
+  materials, Harbin Engineering University. (Not reproduced; consulted for coursework context throughout.)<br>
+  [10] W. Raza, "Underwater Acoustic Transducer &amp; Hydrophone Systems: Architecture, Characterization, and
+  Computational Modeling," this portfolio.<br>
+  [11] W. Raza, "Underwater Acoustic OFDM/QPSK Communication: Signal Structure and Channel Characterization
+  from a Lake Trial," this portfolio.
+  </p>
+</footer>
+
+</div>
+</body>
+</html>
