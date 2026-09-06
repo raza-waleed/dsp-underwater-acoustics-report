@@ -1,5 +1,7 @@
 # Digital Signal Processing for Underwater Acoustic Channels
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22478268.svg)](https://doi.org/10.5281/zenodo.22478268)
+
 A report connecting the theoretical foundations of underwater
 acoustic DSP (processor architecture, channel properties, detection theory,
 array signal processing, and OFDM) to real, previously validated results
@@ -48,4 +50,20 @@ this repository.
 dsp-underwater-acoustics-report.html   the report
 code/python/                           original demo scripts (see code/README.md)
 figures/                               generated figures used by the report
+```
+
+## Citing this work
+
+To cite this specific archived release, cite the Zenodo record:
+
+```bibtex
+@software{raza2026dspunderwater,
+  author    = {Raza, Waleed},
+  title     = {raza-waleed/dsp-underwater-acoustics-report: v1.0.0 - DSP for Underwater Acoustic Channels},
+  year      = {2026},
+  publisher = {Zenodo},
+  version   = {v1.0.0},
+  doi       = {10.5281/zenodo.22478268},
+  url       = {https://doi.org/10.5281/zenodo.22478268}
+}
 ```
