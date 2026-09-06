@@ -7,7 +7,10 @@ from two other reports in this portfolio: a transducer/hydrophone tank
 characterization and a lake-trial OFDM/QPSK channel study.
 
 Open [`dsp-underwater-acoustics-report.html`](dsp-underwater-acoustics-report.html)
-in a browser to read the report.
+in a browser to read the report, or read it live at
+[waleedraza.dev/underwater-acoustics/dsp-foundations](https://waleedraza.dev/underwater-acoustics/dsp-foundations/).
+The two demo scripts are also mirrored on [Hugging Face](https://huggingface.co/spaces/waleedraza93/dsp-underwater-acoustics-report)
+(a plain code mirror, not a trained model).
 
 ## What this is
 
