@@ -1,12 +1,12 @@
 # Digital Signal Processing for Underwater Acoustic Channels
 
-A synthesis report connecting master's-level coursework in underwater
+A report connecting master's-level coursework in underwater
 acoustic DSP (processor architecture, channel properties, detection theory,
 array signal processing, and OFDM) to real, previously validated results
 from two other reports in this portfolio: a transducer/hydrophone tank
 characterization and a lake-trial OFDM/QPSK channel study.
 
-Open [`dsp-underwater-synthesis-report.html`](dsp-underwater-synthesis-report.html)
+Open [`dsp-underwater-acoustics-report.html`](dsp-underwater-acoustics-report.html)
 in a browser to read the report.
 
 ## What this is
@@ -42,7 +42,7 @@ this repository.
 ## Contents
 
 ```
-dsp-underwater-synthesis-report.html   the report
+dsp-underwater-acoustics-report.html   the report
 code/python/                           original demo scripts (see code/README.md)
 figures/                               generated figures used by the report
 ```

@@ -104,7 +104,7 @@
 </header>
 
 <div class="abstract">
-  <b>Abstract.</b> This report synthesizes five areas of digital signal processing (DSP) coursework relevant to
+  <b>Abstract.</b> This report brings together five areas of digital signal processing (DSP) coursework relevant to
   underwater acoustic communication, DSP processor architecture, shallow-water channel properties, low-SNR
   signal detection, array processing and direction-of-arrival (DOA) estimation, and orthogonal frequency-division
   multiplexing (OFDM), and connects each to concrete, verified findings from two earlier reports in this
@@ -133,7 +133,7 @@
     <li><a href="#sec4"><span class="toc-num">4</span><span class="toc-title">Detection Theory for Low-SNR Underwater Signals</span></a></li>
     <li><a href="#sec5"><span class="toc-num">5</span><span class="toc-title">Array Signal Processing and Direction-of-Arrival Estimation</span></a></li>
     <li><a href="#sec6"><span class="toc-num">6</span><span class="toc-title">OFDM for Underwater Acoustic Communication</span></a></li>
-    <li><a href="#sec7"><span class="toc-num">7</span><span class="toc-title">Synthesis: Lessons Learned</span></a></li>
+    <li><a href="#sec7"><span class="toc-num">7</span><span class="toc-title">Lessons Learned</span></a></li>
   </ol>
   <div class="toc-endmatter">
     <a href="#nomenclature">Nomenclature</a>
@@ -148,7 +148,7 @@
     <li><a href="#fig1">Figure 1: Matched-filter detection of a known pulse in noise</a></li>
     <li><a href="#fig2">Figure 2: Matched-filter detection score versus SNR</a></li>
     <li><a href="#fig3">Figure 3: MUSIC versus conventional beamforming, simulated array</a></li>
-    <li><a href="#fig4">Figure 4: Coursework-to-application synthesis diagram</a></li>
+    <li><a href="#fig4">Figure 4: Coursework-to-application connection diagram</a></li>
   </ol>
 </details>
 
@@ -163,7 +163,7 @@
   processing, and OFDM communication. That coursework included published research papers, a graduate-level array
   processing textbook, and university lecture slides, none of which are original work and none of which are
   reproduced in this report or included in its repository.</p>
-  <p>What this report does instead is synthesize: it summarizes, in its own words and at a level appropriate for
+  <p>What this report does instead is connect the two: it summarizes, in its own words and at a level appropriate for
   proper citation, the core idea from each area of coursework, and then shows, concretely, where that idea
   reappeared in the two earlier reports' real results. Two small computational demonstrations, a matched-filter
   detector and a MUSIC direction-of-arrival estimator, are built from scratch to demonstrate working
@@ -306,13 +306,13 @@
 </section>
 
 <section class="block" id="sec7">
-  <h2>7. Synthesis: Lessons Learned</h2>
+  <h2>7. Lessons Learned</h2>
   <div class="subtitle">How five areas of coursework became two applied reports</div>
   <p>Figure 4 summarizes the structure of this report: each coursework area studied maps to a specific result
   already produced elsewhere in this portfolio, or to an original demonstration built here to show the
   underlying method is genuinely understood rather than only cited.</p>
   <div class="diagram-wrap">
-    <svg viewBox="0 0 920 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Coursework to application synthesis diagram">
+    <svg viewBox="0 0 920 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Coursework to application connection diagram">
       <style>
         .box { fill:#eef4f8; stroke:#1f5f8b; stroke-width:1.5; rx:6; }
         .box2 { fill:#fdf3ea; stroke:#b45309; stroke-width:1.5; rx:6; }
@@ -373,7 +373,7 @@
       <text x="460" y="376" class="sub" font-size="11">independently verifiable connection, not a rhetorical one.</text>
     </svg>
   </div>
-  <div class="fig-label" id="fig4">Figure 4: Synthesis diagram connecting cited coursework (left) to verified applied results and original demonstrations in this portfolio (right).</div>
+  <div class="fig-label" id="fig4">Figure 4: Diagram connecting cited coursework (left) to verified applied results and original demonstrations in this portfolio (right).</div>
   <p>The lesson that generalizes across all five rows is the same one detection theory itself teaches: a
   technique's value is established not by how sophisticated it sounds, but by whether it performs against real
   data. Matched filtering is a simple, decades-old idea; it detected a real synchronization pulse at correlation

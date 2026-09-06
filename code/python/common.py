@@ -1,4 +1,4 @@
-"""Shared paths and plot styling for the DSP synthesis report scripts."""
+"""Shared paths and plot styling for the DSP report scripts."""
 
 from pathlib import Path
 import matplotlib
