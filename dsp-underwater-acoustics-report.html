@@ -119,7 +119,7 @@
   and the shallow-water channel properties described here (frequency-dependent absorption, short coherence
   times) were independently measured in the lake trial's real data. The result is a single narrative connecting
   documented theory to measured results.
-  <div class="abstract-note">This report contains 4 figures, numbered in sequence and cited by number in the
+  <div class="abstract-note">This report contains 5 figures, numbered in sequence and cited by number in the
   text where they are discussed. Every external source (textbooks, papers, reference material) is listed in the
   References section and is not included in this repository.</div>
 </div>
@@ -133,7 +133,8 @@
     <li><a href="#sec4"><span class="toc-num">4</span><span class="toc-title">Detection Theory for Low-SNR Underwater Signals</span></a></li>
     <li><a href="#sec5"><span class="toc-num">5</span><span class="toc-title">Array Signal Processing and Direction-of-Arrival Estimation</span></a></li>
     <li><a href="#sec6"><span class="toc-num">6</span><span class="toc-title">OFDM for Underwater Acoustic Communication</span></a></li>
-    <li><a href="#sec7"><span class="toc-num">7</span><span class="toc-title">Lessons Learned</span></a></li>
+    <li><a href="#sec7"><span class="toc-num">7</span><span class="toc-title">Peak-to-Average Power Ratio: Why It Matters More Underwater</span></a></li>
+    <li><a href="#sec8"><span class="toc-num">8</span><span class="toc-title">Lessons Learned</span></a></li>
   </ol>
   <div class="toc-endmatter">
     <a href="#nomenclature">Nomenclature</a>
@@ -143,12 +144,13 @@
 </nav>
 
 <details class="lof" id="lof">
-  <summary>List of Figures (4)</summary>
+  <summary>List of Figures (5)</summary>
   <ol class="lof-list">
     <li><a href="#fig1">Figure 1: Matched-filter detection of a known pulse in noise</a></li>
     <li><a href="#fig2">Figure 2: Matched-filter detection score versus SNR</a></li>
     <li><a href="#fig3">Figure 3: MUSIC versus conventional beamforming, simulated array</a></li>
-    <li><a href="#fig4">Figure 4: Background-to-application connection diagram</a></li>
+    <li><a href="#fig4">Figure 4: OFDM peak-to-average power ratio (PAPR) CCDF</a></li>
+    <li><a href="#fig5">Figure 5: Background-to-application connection diagram</a></li>
   </ol>
 </details>
 
@@ -306,9 +308,61 @@
 </section>
 
 <section class="block" id="sec7">
-  <h2>7. Lessons Learned</h2>
+  <h2>7. Peak-to-Average Power Ratio: Why It Matters More Underwater</h2>
+  <div class="subtitle">A known OFDM weakness, argued to be more consequential for a resonant acoustic transducer than for a radio-frequency amplifier</div>
+  <p>The same subcarrier structure that gives OFDM its spectral efficiency and multipath robustness (Section 6)
+  also produces a time-domain waveform with a high peak-to-average power ratio (PAPR): because the transmitted
+  signal is a sum of many independently modulated subcarriers, those subcarriers occasionally add up
+  constructively by chance, producing instantaneous peaks many times larger than the signal's average power.
+  This is a well-known limitation of OFDM, and two named families of technique were developed specifically to
+  reduce it: partial transmit sequence (PTS), introduced by M&uuml;ller and Huber [12], and selected mapping (SLM),
+  introduced by B&auml;uml, Fischer, and Huber [13]. Neither technique is implemented here; they are cited by name and
+  original source only, to establish that this is a recognized problem with a real, citable body of work behind
+  it, not a claim invented for this report.</p>
+  <p>Figure 4 is an original computation of the actual PAPR of this portfolio's own OFDM scheme, not a generic
+  textbook example. It builds a synthetic realization of the exact structure recovered and validated in the lake
+  trial report (a real-valued 8192-point IFFT, 512 active QPSK subcarriers occupying a 3 kHz sub-band), computes
+  the PAPR of the resulting waveform across 20,000 independent random symbol realizations, and reports the result
+  as a complementary cumulative distribution function (CCDF), the standard way PAPR performance is reported in
+  the OFDM literature.</p>
+  <div class="figure-grid single">
+    <figure id="fig4"><img src="figures/ofdm_papr_ccdf.png" alt="OFDM PAPR CCDF for the lake trial's 8192-point, 512-subcarrier structure"><figcaption>Figure 4: PAPR CCDF for this portfolio's own validated OFDM structure, computed from 20,000 random symbol realizations. Original computation.</figcaption></figure>
+  </div>
+  <div class="result-callout">
+    <b>Original computation:</b> mean PAPR = 11.51 dB &nbsp;·&nbsp; 99% CCDF point = 13.47 dB &nbsp;·&nbsp; 99.9%
+    CCDF point = 14.22 dB, over 20,000 realizations of the lake trial's 8192-point, 512-active-subcarrier
+    structure
+  </div>
+  <p>Whether this specific PAPR is more or less of a problem depends on what has to reproduce the waveform
+  faithfully at its peaks, and that is where the underwater case differs from the terrestrial radio-frequency
+  case. The tank characterization report in this portfolio measured a piezoelectric transducer's electroacoustic
+  response and found a peak transmitting voltage response of 225.7 dB at a resonance of 39.8 kHz, with an
+  acoustic bandwidth of only 3.0 kHz between its -3 dB points, giving an acoustic quality factor Q of 13.3. That
+  measurement was of a different transducer than the one used in the lake trial, but it illustrates a physical
+  constraint that applies to resonant piezoelectric transducers generally: their usable bandwidth is narrow and
+  fixed by Q, unlike a typical radio-frequency power amplifier, which is designed to stay linear across a
+  comparatively much wider bandwidth than any single narrowband resonant transducer.</p>
+  <div class="model-callout">
+    <b>Argument, not a measured cross-system fact:</b> the following reasoning connects two real, independently
+    measured numbers from this portfolio, the tank report's 3.0 kHz transducer bandwidth and this report's 11 to
+    14 dB OFDM PAPR, but the connection itself is an engineering argument, not a third measurement. A high-PAPR
+    signal driving a narrowband resonant transducer forces a choice: back off the drive power well below the
+    transducer's peak rating so that the rare high-power peaks stay within its linear range, which wastes an
+    already power-limited acoustic link's transmit budget, or drive it closer to its rating and accept that the
+    peaks push the transducer toward nonlinear distortion, which generates energy outside its already-narrow 3.0
+    kHz passband, energy a resonant transducer cannot radiate efficiently in the first place. A radio-frequency
+    power amplifier facing the same PAPR has a comparatively easier time, because its linear range is not pinned
+    to a narrow mechanical resonance the way a piezoelectric transducer's is. On that reasoning, PAPR-reduction
+    techniques such as PTS and SLM are arguably more consequential for a narrowband underwater transducer than
+    for a broadband radio-frequency amplifier, even though the PAPR problem itself, as measured in Figure 4, is
+    identical in both domains, since it comes from the OFDM waveform, not from the transducer.
+  </div>
+</section>
+
+<section class="block" id="sec8">
+  <h2>8. Lessons Learned</h2>
   <div class="subtitle">From documented theory to measured results</div>
-  <p>Figure 4 summarizes the structure of this report: each background topic addressed above maps to a specific result
+  <p>Figure 5 summarizes the structure of this report: each background topic addressed above maps to a specific result
   already produced elsewhere in this portfolio, or to an original demonstration built here to show the
   underlying method is genuinely understood rather than only cited.</p>
   <div class="diagram-wrap">
@@ -373,7 +427,7 @@
       <text x="460" y="376" class="sub" font-size="11">independently verifiable connection, not a rhetorical one.</text>
     </svg>
   </div>
-  <div class="fig-label" id="fig4">Figure 4: Diagram connecting cited background material (left) to verified applied results and original demonstrations in this portfolio (right).</div>
+  <div class="fig-label" id="fig5">Figure 5: Diagram connecting cited background material (left) to verified applied results and original demonstrations in this portfolio (right).</div>
   <p>The lesson that generalizes across all five rows is the same one detection theory itself teaches: a
   technique's value is established not by how sophisticated it sounds, but by whether it performs against real
   data. Matched filtering is a simple, decades-old idea; it detected a real synchronization pulse at correlation
@@ -387,6 +441,7 @@
 <section class="block" id="nomenclature">
   <h2 style="font-size:1.05rem;">Nomenclature</h2>
   <div class="nomenclature">
+    <div><b>CCDF</b> &nbsp;complementary cumulative distribution function</div>
     <div><b>DOA</b> &nbsp;direction of arrival</div>
     <div><b>EM</b> &nbsp;expectation-maximization</div>
     <div><b>EVM</b> &nbsp;error vector magnitude</div>
@@ -394,7 +449,10 @@
     <div><b>MUSIC</b> &nbsp;MUltiple SIgnal Classification</div>
     <div><b>NFFT</b> &nbsp;FFT size used for OFDM (de)modulation</div>
     <div><b>OFDM</b> &nbsp;orthogonal frequency-division multiplexing</div>
+    <div><b>PAPR</b> &nbsp;peak-to-average power ratio</div>
+    <div><b>PTS</b> &nbsp;partial transmit sequence</div>
     <div><b>QPSK</b> &nbsp;quadrature phase-shift keying</div>
+    <div><b>SLM</b> &nbsp;selected mapping</div>
     <div><b>SNR</b> &nbsp;signal-to-noise ratio</div>
     <div><b>ToA</b> &nbsp;time of arrival</div>
     <div><b>ULA</b> &nbsp;uniform linear array</div>
@@ -404,8 +462,8 @@
 <footer class="page-foot" id="references">
   <p><b>Data and materials availability.</b> This report cites textbooks, published papers, and university
   reference materials. None of these are included in this repository, per their copyright and licensing status.
-  Only two original, from-scratch computational demonstrations (Figures 1-3) and one original diagram (Figure 4)
-  are included as code and figures.</p>
+  Only three original, from-scratch computational demonstrations (Figures 1-3, and Figure 4) and one original
+  diagram (Figure 5) are included as code and figures.</p>
   <p><b>References</b></p>
   <p style="font-size:0.85rem;">
   [1] H. L. Van Trees, <i>Optimum Array Processing</i>, Wiley-Interscience, 2002. (Cited for the theory in
@@ -431,7 +489,13 @@
   [10] W. Raza, "Underwater Acoustic Transducer &amp; Hydrophone Systems: Architecture, Characterization, and
   Computational Modeling," this portfolio.<br>
   [11] W. Raza, "Underwater Acoustic OFDM/QPSK Communication: Signal Structure and Channel Characterization
-  from a Lake Trial," this portfolio.
+  from a Lake Trial," this portfolio.<br>
+  [12] S. H. M&uuml;ller and J. B. Huber, "OFDM with reduced peak-to-average power ratio by optimum combination of
+  partial transmit sequences," <i>Electronics Letters</i>, vol. 33, no. 5, pp. 368-369, Feb. 1997. DOI:
+  10.1049/el:19970266. (PTS cited by name and origin for Section 7; not implemented.)<br>
+  [13] R. W. B&auml;uml, R. F. H. Fischer, and J. B. Huber, "Reducing the peak-to-average power ratio of multicarrier
+  modulation by selected mapping," <i>Electronics Letters</i>, vol. 32, no. 22, pp. 2056-2057, Oct. 1996. DOI:
+  10.1049/el:19961384. (SLM cited by name and origin for Section 7; not implemented.)
   </p>
 </footer>
 
