@@ -73,3 +73,7 @@ To cite this specific archived release, cite the Zenodo record:
   url       = {https://doi.org/10.5281/zenodo.22547577}
 }
 ```
+
+## Author
+
+[Waleed Raza](https://github.com/raza-waleed)
